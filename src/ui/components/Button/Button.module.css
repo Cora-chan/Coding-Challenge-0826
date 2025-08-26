@@ -1,0 +1,83 @@
+.button {
+  border-radius: var(--border-radius-default);
+  background-color: var(--color-background);
+  font-family: var(--font-primary);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: bold;
+  max-width: var(--width-input);
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  transition: transform 0.1s ease;
+  width: 100%;
+}
+
+.button.primary {
+  --color-background:var(--color-brand);
+  --color-text:white;
+  --font-primary: var(--font-primary);
+}
+
+.button.secondary {
+  --color-background: transparent;
+  --color-text:white;
+  border: 2px solid white;
+ --font-primary: var(--font-primary);
+}
+
+.button.tertiary {
+  --color-background: #fff;
+  --color-text:var(--color-brand);
+  border: 2px solid var(--color-brand);
+ --font-primary: var(--font-primary);
+}
+
+.spinner{
+  --size: 24px;           /* diameter */
+  --thickness: 3px;       /* border width */
+  --track: #e5e7eb;       /* track color */
+  --indicator: #10b981;   /* spinning color */
+
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  border: var(--thickness) solid var(--track);
+  border-top-color: var(--indicator);
+  animation: spin 0.9s linear infinite;
+  display: inline-block;
+}
+
+.spinnerContainer {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.loadingText{
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation: none; border-top-color: var(--track); }
+}
+
+
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+/** TODO: Create separate styles for .primary and .secondary variants of this button:
+* - Must use the CSS variables declared in App.css
+*/
