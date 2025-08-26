@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { useAppSelector } from "../../../core/store/hooks";
 
 import useAddressBook from "../../hooks/useAddressBook";
@@ -6,10 +6,13 @@ import Address from "../Address/Address";
 import Button from "../Button/Button";
 import Card from "../Card/Card";
 import $ from "./AddressBook.module.css";
-import { selectAddress } from "../../../core/reducers/addressBookSlice";
+import { selectAddress,selectAddressError } from "../../../core/reducers/addressBookSlice";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 const AddressBook = () => {
   const addresses = useAppSelector(selectAddress);
+  const error = useAppSelector(selectAddressError);
+  
   const { removeAddress, loadSavedAddresses, loading } = useAddressBook();
   const addressBookTitle = `📓 Address book (${addresses.length})`;
 
@@ -20,6 +23,7 @@ const AddressBook = () => {
 
   return (
     <section className={$.addressBook}>
+      <h3>{error && <ErrorMessage message={error} />}</h3>
       <h3>{addressBookTitle}</h3>
       {!loading && (
         <>

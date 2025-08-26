@@ -16,15 +16,15 @@
 
 .button.primary {
   --color-background:var(--color-brand);
-  --color-text:white;
+  --color-text:white;      
   --font-primary: var(--font-primary);
 }
 
 .button.secondary {
   --color-background: transparent;
-  --color-text:white;
+  --color-text: white;
   border: 2px solid white;
- --font-primary: var(--font-primary);
+  --font-primary: var(--font-primary);
 }
 
 .button.tertiary {
@@ -35,10 +35,10 @@
 }
 
 .spinner{
-  --size: 24px;           /* diameter */
-  --thickness: 3px;       /* border width */
-  --track: #e5e7eb;       /* track color */
-  --indicator: #10b981;   /* spinning color */
+  --size: 24px;           
+  --thickness: 3px;      
+  --track: var(--color-text-light);      
+  --indicator: var(--color-brand);   
 
   width: var(--size);
   height: var(--size);

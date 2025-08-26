@@ -18,17 +18,14 @@ const Button: FunctionComponent<ButtonProps> = ({
   variant = "primary",
   loading = false,
 }) => {
-  //const variantClass = variant === "primary" ? $.primary : variant === "secondary" ? $.secondary : "";
 
-  
-const variantMap: Record<string, string> = {
-  primary: $.primary,
-  secondary: $.secondary,
-  tertiary: $.tertiary, // add more variants as needed
-};
+  const variantMap: Record<string, string> = {
+    primary: $.primary,
+    secondary: $.secondary,
+    tertiary: $.tertiary, // add more variants as needed
+  };
 
-const variantClass = variantMap[variant] || "";
-
+  const variantClass = variantMap[variant] || "";
 
   return (
     <button
@@ -41,13 +38,13 @@ const variantClass = variantMap[variant] || "";
       onClick={onClick}
       disabled={loading}
     >
-{loading ? (
-      <div className={$.spinnerContainer}><span data-testid="loading-spinner" className={$.spinner}>
+      {loading ? (
+        <div className={$.spinnerContainer}><span data-testid="loading-spinner" className={$.spinner}>
 
         </span><span className={$.loadingText}>Loading</span></div>
-    ) : (
-      children
-    )}
+      ) : (
+        children
+      )}
 
     </button>
   );

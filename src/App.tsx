@@ -242,10 +242,9 @@ const App: React.FC = () => {
       <Section variant="dark">
         <div className="contentWrapper">
            <AddressBook
-          // addresses={addresses}
-          // loading={loading}
-          // removeAddress={removeAddress}
         />
+         {/* display error here under the address book */}
+          {error && <ErrorMessage message={error} />}
         </div>
       </Section>
     </main>
