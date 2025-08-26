@@ -9,6 +9,8 @@ import useAddressBook from "@/hooks/useAddressBook";
 import useFormFields from "@/hooks/useFormFields";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import { Address as AddressType } from "./types";
+import { useAppDispatch, useAppSelector } from "./core/store/hooks";
+import { selectAddress,selectAddressError,clearError } from "./core/reducers/addressBookSlice";
 
 
 const transformAddress = (address: AddressType): AddressType => {
@@ -46,6 +48,8 @@ const App: React.FC = () => {
    */
   const [error, setError] = React.useState<undefined | string>(undefined);
   const [addresses, setAddresses] = React.useState<AddressType[]>([]);
+  const duplicateError = useAppSelector(selectAddressError);
+  const dispatch = useAppDispatch();
 
   /**
    * Redux actions
@@ -136,6 +140,8 @@ const App: React.FC = () => {
     setSelectedAddress("");
     setAddresses([]);
     setError(undefined);
+    dispatch(clearError());
+  
   };
 
   return (
@@ -240,11 +246,11 @@ const App: React.FC = () => {
       </Section>
 
       <Section variant="dark">
+         {/* display error here under the address book */}
+          {duplicateError && <ErrorMessage message={duplicateError} />}
         <div className="contentWrapper">
            <AddressBook
         />
-         {/* display error here under the address book */}
-          {error && <ErrorMessage message={error} />}
         </div>
       </Section>
     </main>

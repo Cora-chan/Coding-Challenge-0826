@@ -5,13 +5,13 @@ import { RootState } from "../store";
 // Define a type for the slice state
 interface CounterState {
   addresses: Address[];
-  error:string | null;
+  error: string | null;
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
   addresses: [],
-  error:null
+  error: null,
 };
 
 export const addressBookSlice = createSlice({
@@ -22,11 +22,14 @@ export const addressBookSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
+    clearError(state) {
+      state.error = null;
+    },
     addAddress: (state, action: PayloadAction<Address>) => {
       /** TODO: Prevent duplicate addresses */
 
- const newAddr = action.payload;
-      const exists = state.addresses.some(a => a.id === newAddr.id);
+      const newAddr = action.payload;
+      const exists = state.addresses.some((a) => a.id === newAddr.id);
 
       if (exists) {
         // Prevent duplicate and notify user
@@ -35,12 +38,12 @@ export const addressBookSlice = createSlice({
       }
 
       state.addresses.push(newAddr);
-      state.error = null; // Clear any previous error 
+      state.error = null; // Clear any previous error
     },
     removeAddress: (state, action: PayloadAction<string>) => {
       /** TODO: Write a state update which removes an address from the addresses array. */
-      console.log("remove address1111",action.payload);
-       state.addresses = state.addresses.filter(a => a.id !== action.payload);
+      console.log("remove address1111", action.payload);
+      state.addresses = state.addresses.filter((a) => a.id !== action.payload);
       state.error = null; // Clear any previous error
     },
     updateAddresses: (state, action: PayloadAction<Address[]>) => {
@@ -50,13 +53,12 @@ export const addressBookSlice = createSlice({
   },
 });
 
-export const { addAddress, removeAddress, updateAddresses, setError } =
+export const { addAddress, removeAddress, updateAddresses, setError, clearError } =
   addressBookSlice.actions;
 
 // // Other code such as selectors can use the imported `RootState` type
 export const selectAddress = (state: RootState) => state.addressBook.addresses;
 
-export const selectAddressError = (state: RootState) =>
-  state.addressBook.error
+export const selectAddressError = (state: RootState) => state.addressBook.error;
 
 export default addressBookSlice.reducer;

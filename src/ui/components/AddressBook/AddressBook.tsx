@@ -11,7 +11,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 const AddressBook = () => {
   const addresses = useAppSelector(selectAddress);
-  const error = useAppSelector(selectAddressError);
+
   
   const { removeAddress, loadSavedAddresses, loading } = useAddressBook();
   const addressBookTitle = `📓 Address book (${addresses.length})`;
@@ -23,7 +23,6 @@ const AddressBook = () => {
 
   return (
     <section className={$.addressBook}>
-      <h3>{error && <ErrorMessage message={error} />}</h3>
       <h3>{addressBookTitle}</h3>
       {!loading && (
         <>
