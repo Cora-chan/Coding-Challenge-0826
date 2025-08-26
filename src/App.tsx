@@ -1,18 +1,15 @@
 import React, { useState } from "react";
-
 import Address from "@/components/Address/Address";
 import AddressBook from "@/components/AddressBook/AddressBook";
 import Form from "@/components/Form/Form";
 import Button from "@/components/Button/Button";
-import InputText from "@/components/InputText/InputText";
 import Radio from "@/components/Radio/Radio";
 import Section from "@/components/Section/Section";
 import useAddressBook from "@/hooks/useAddressBook";
 import useFormFields from "@/hooks/useFormFields";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import { Address as AddressType } from "./types";
-import localforage from "localforage";
-import { useEffect } from "react";
+
 
 const transformAddress = (address: AddressType): AddressType => {
   return {
@@ -58,11 +55,6 @@ const App: React.FC = () => {
    * Text fields onChange handlers
    */
 
-
-  const handleSelectedAddressChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => setSelectedAddress(e.target.value);
-
   /** TODO: Fetch addresses based on houseNumber and postCode using the local BE api
    * - Example URL of API: ${process.env.NEXT_PUBLIC_URL}/api/getAddresses?postcode=1345&streetnumber=350
    * - Ensure you provide a BASE URL for api endpoint for grading purposes!
@@ -84,10 +76,19 @@ const App: React.FC = () => {
         `${process.env.NEXT_PUBLIC_URL}/api/getAddresses?postcode=${addressFields.postCode}&streetnumber=${addressFields.houseNumber}`
       );
       console.log("addressFields", addressFields);
-
-      if (!response.ok) throw new Error("Failed to fetch addresses");
-
       const data = await response.json();
+
+      if (!response.ok) {
+         // our API returns { status: "error", errormessage: "…"}
+      const apiMsg =
+        typeof data.errormessage === "string"
+          ? data.errormessage
+          : "Failed to fetch addresses";
+      setError(apiMsg);
+      return;
+      }
+
+      
       console.log("data", data);
       const transformed = data.details.map(transformAddress);
       setAddresses(transformed);
@@ -140,11 +141,12 @@ const App: React.FC = () => {
   return (
     <main>
       <Section>
-        <h1>
-          Create your own address book!
-          <br />
-          <small className="font-small">
-            Enter an address by postcode add personal info and done! 👏
+        <div className="contentWrapper">
+          <h1>
+            Create your own address book!
+            <br />
+            <small className="font-small">
+              Enter an address by postcode add personal info and done! 👏
           </small>
         </h1>
         {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
@@ -161,6 +163,7 @@ const App: React.FC = () => {
               extraProps: {
                 value: addressFields.postCode,
                 onChange: handleAddressChange,
+                type:"number"
               },
             },
             {
@@ -169,6 +172,7 @@ const App: React.FC = () => {
               extraProps: {
                 value: addressFields.houseNumber,
                 onChange: handleAddressChange,
+                type:"number"
               },
             },
           ]}
@@ -232,15 +236,17 @@ const App: React.FC = () => {
         */<Button variant="tertiary" onClick={handleClearAll}>
             Clear all fields
           </Button>}
+      </div>
       </Section>
 
       <Section variant="dark">
+        <div className="contentWrapper">
            <AddressBook
           // addresses={addresses}
           // loading={loading}
           // removeAddress={removeAddress}
         />
-        
+        </div>
       </Section>
     </main>
   );

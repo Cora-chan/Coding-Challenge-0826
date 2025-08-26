@@ -29,16 +29,29 @@ export default async function handle(
   /** TODO: Implement the validation logic to ensure input value
    *  is all digits and non negative
    */
-  const isStrictlyNumeric = (value: string) => {
-    return true;
-  };
+  const isStrictlyNumeric = (value: string) => /^[0-9]+$/.test(value);
+
+    const validations = [
+    {
+      fieldName: "Postcode",
+      value: postcode as string,
+      errMsg: "Postcode must be all digits and non negative!",
+    },
+    {
+      fieldName: "Street Number",
+      value: streetnumber as string,
+      errMsg: "Street Number must be all digits and non negative!",
+    },
+  ];
 
   /** TODO: Refactor the code below so there is no duplication of logic for postCode/streetNumber digit checks. */
-  if (!isStrictlyNumeric(postcode as string)) {
-    return res.status(400).send({
-      status: "error",
-      errormessage: "Postcode must be all digits and non negative!",
-    });
+   for (const { value, errMsg } of validations) {
+    if (!isStrictlyNumeric(value)) {
+      return res.status(400).send({
+        status: "error",
+        errormessage: errMsg,
+      });
+    }
   }
 
   if (!isStrictlyNumeric(streetnumber as string)) {

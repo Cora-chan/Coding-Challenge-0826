@@ -59,6 +59,14 @@ code {
   --width-input: 20rem;
   --width-content: 30rem;
   --font-primary: 'Roboto',sans-serif;
+  --width-section: 40rem;
+}
+
+.contentWrapper {
+  max-width: var(--width-content);  
+  margin: 0 auto;                
+  padding: 1rem;   
+
 }
 
 * {
