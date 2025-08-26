@@ -1,6 +1,6 @@
 import {
-  addAddress,
-  removeAddress,
+  addAddress as addAddressAction,
+  removeAddress as removeAddressAction,
   selectAddress,
   updateAddresses,
 } from "../../core/reducers/addressBookSlice";
@@ -16,36 +16,37 @@ export default function useAddressBook() {
   const addresses = useAppSelector(selectAddress);
   const [loading, setLoading] = React.useState(true);
 
-  const updateDatabase = React.useCallback(() => {
-    databaseService.setItem("addresses", addresses);
-  }, [addresses]);
+  // 1) Load saved addresses once
+  const loadSavedAddresses = React.useCallback(async () => {
+    const saved = await databaseService.getItem<RawAddressModel[]>("addresses");
+    if (Array.isArray(saved)) {
+      const transformed = saved.map(transformAddress);
+      dispatch(updateAddresses(transformed));
+    }
+    setLoading(false);
+  }, [dispatch]);
+
+  // 2) Persist to IndexedDB whenever `addresses` changes (and not during initial load)
+  React.useEffect(() => {
+    if (!loading) {
+      databaseService.setItem("addresses", addresses);
+    }
+  }, [addresses, loading]);
+
+  // 3) Actions
+  const addAddress   = React.useCallback((address: Address) => {
+    dispatch(addAddressAction(address));
+  }, [dispatch]);
+
+  const removeAddress = React.useCallback((id: string) => {
+    dispatch(removeAddressAction(id));
+  }, [dispatch]);
 
   return {
-    /** Add address to the redux store */
-    addAddress: (address: Address) => {
-      dispatch(addAddress(address));
-      updateDatabase();
-    },
-    /** Remove address by ID from the redux store */
-    removeAddress: (id: string) => {
-      dispatch(removeAddress(id));
-      updateDatabase();
-    },
-    /** Loads saved addresses from the indexedDB */
-    loadSavedAddresses: async () => {
-      const saved: RawAddressModel[] | null = await databaseService.getItem(
-        "addresses"
-      );
-      // No saved item found, exit this function
-      if (!saved || !Array.isArray(saved)) {
-        setLoading(false);
-        return;
-      }
-      dispatch(
-        updateAddresses(saved.map((address) => transformAddress(address)))
-      );
-      setLoading(false);
-    },
+    addresses,
     loading,
+    loadSavedAddresses,
+    addAddress,
+    removeAddress,
   };
 }

@@ -6,3 +6,12 @@
 .formRow {
   margin-bottom: 0.5em;
 }
+
+/* :root {
+  --color-primary: #413ef7;
+  --color-secondary: #008CBA;
+  --color-background: #f4f4f4;
+  --color-text: #333;
+  --border-radius-default: px;
+  --width-input: 300px;
+} */

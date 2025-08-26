@@ -16,10 +16,9 @@ interface FormProps {
   label: string;
   loading: boolean;
   formEntries: FormEntry[];
-  onFormSubmit: () => void;
+  onFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
   submitText: string;
 }
-
 const Form: FunctionComponent<FormProps> = ({
   label,
   loading,
@@ -30,7 +29,7 @@ const Form: FunctionComponent<FormProps> = ({
   return (
     <form onSubmit={onFormSubmit}>
       <fieldset>
-        <legend>{label}</legend>
+        <h3 className={$.formHeading}>{label}</h3>
         {formEntries.map(({ name, placeholder, extraProps }, index) => (
           <div key={`${name}-${index}`} className={$.formRow}>
             <InputText

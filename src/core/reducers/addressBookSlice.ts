@@ -20,9 +20,13 @@ export const addressBookSlice = createSlice({
     addAddress: (state, action: PayloadAction<Address>) => {
       /** TODO: Prevent duplicate addresses */
       state.addresses.push(action.payload);
+      console.log("add address",state.addresses);
     },
     removeAddress: (state, action: PayloadAction<string>) => {
       /** TODO: Write a state update which removes an address from the addresses array. */
+      console.log("remove address1111",action.payload);
+       state.addresses = state.addresses.filter(a => a.id !== action.payload);
+       console.log("remove address222",state.addresses);
     },
     updateAddresses: (state, action: PayloadAction<Address[]>) => {
       state.addresses = action.payload;
