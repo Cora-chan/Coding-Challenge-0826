@@ -49,11 +49,11 @@ export const addressBookSlice = createSlice({
     removeAddress: (state, action: PayloadAction<string>) => {
       /** TODO: Write a state update which removes an address from the addresses array. */
       state.addresses = state.addresses.filter((a) => a.id !== action.payload);
-      state.error = null; // Clear any previous error
+      state.error = null; 
     },
     updateAddresses: (state, action: PayloadAction<Address[]>) => {
       state.addresses = action.payload;
-      state.error = null; // Clear any previous error
+      state.error = null; 
     },
   },
 });

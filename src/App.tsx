@@ -16,7 +16,7 @@ import { selectAddressError, clearError } from "./core/reducers/addressBookSlice
 const transformAddress = (address: AddressType): AddressType => {
   return {
     ...address,
-    id: Math.random().toString(36).substring(2, 9),
+    id: `${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
   };
 };
 
