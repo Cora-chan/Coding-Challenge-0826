@@ -31,7 +31,7 @@ export default async function handle(
    */
   const isStrictlyNumeric = (value: string) => /^[0-9]+$/.test(value);
 
-    const validations = [
+  const validations = [
     {
       fieldName: "Postcode",
       value: postcode as string,
@@ -45,7 +45,7 @@ export default async function handle(
   ];
 
   /** TODO: Refactor the code below so there is no duplication of logic for postCode/streetNumber digit checks. */
-   for (const { value, errMsg } of validations) {
+  for (const { value, errMsg } of validations) {
     if (!isStrictlyNumeric(value)) {
       return res.status(400).send({
         status: "error",

@@ -1,75 +1,53 @@
+/* ============================================================
+   Button + Spinner Styles (optimized & DRY)
+   ============================================================ */
+
+/* 1. Variant & component–specific variables */
+
+/* 2. Button base styles */
 .button {
-  border-radius: var(--border-radius-default);
-  background-color: var(--color-background);
-  font-family: var(--font-primary);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  color: var(--color-text);
-  cursor: pointer;
-  font-size: 0.9em;
-  font-weight: bold;
-  max-width: var(--width-input);
-  padding: 0.5em 1em;
-  margin: 0.5em 0;
-  transition: transform 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  max-width: var(--button-max-width);
   width: 100%;
+  padding: var(--button-padding);
+  margin: var(--button-margin-vertical) 0;
+  font: var(--button-font-weight) var(--button-font-size) var(--font-primary);
+  border-radius: var(--radius-default);
+  border: var(--btn-border);
+  background-color: var(--btn-bg);
+  color: var(--btn-fg);
+  box-shadow: var(--btn-shadow);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
+/* 3. Variant overrides */
 .button.primary {
-  --color-background:var(--color-brand);
-  --color-text:white;      
-  --font-primary: var(--font-primary);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+  border: var(--btn-primary-border);
+  box-shadow: var(--btn-primary-shadow);
 }
 
 .button.secondary {
-  --color-background: transparent;
-  --color-text: white;
-  border: 2px solid white;
-  --font-primary: var(--font-primary);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-fg);
+  border: var(--btn-secondary-border);
+  box-shadow: var(--btn-secondary-shadow);
 }
 
 .button.tertiary {
-  --color-background: #fff;
-  --color-text:var(--color-brand);
-  border: 2px solid var(--color-brand);
- --font-primary: var(--font-primary);
+  background-color: var(--btn-tertiary-bg);
+  color: var(--btn-tertiary-fg);
+  border: var(--btn-tertiary-border);
+  box-shadow: var(--btn-tertiary-shadow);
 }
 
-.spinner{
-  --size: 24px;           
-  --thickness: 3px;      
-  --track: var(--color-text-light);      
-  --indicator: var(--color-brand);   
-
-  width: var(--size);
-  height: var(--size);
-  border-radius: 50%;
-  border: var(--thickness) solid var(--track);
-  border-top-color: var(--indicator);
-  animation: spin 0.9s linear infinite;
-  display: inline-block;
-}
-
-.spinnerContainer {
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-}
-
-.loadingText{
-  margin-left: 10px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .spinner { animation: none; border-top-color: var(--track); }
-}
-
-
-
+/* 4. Interaction states */
 .button:hover {
   transform: scale(1.05);
 }
@@ -78,6 +56,37 @@
   transform: scale(0.95);
 }
 
-/** TODO: Create separate styles for .primary and .secondary variants of this button:
-* - Must use the CSS variables declared in App.css
-*/
+/* 5. Spinner component */
+.spinner {
+  display: inline-block;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border-radius: 50%;
+  border: var(--spinner-thickness) solid var(--spinner-track);
+  border-top-color: var(--spinner-indicator);
+  animation: spin 0.9s linear infinite;
+}
+
+.spinnerContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loadingText {
+  margin-left: 0.5rem;
+}
+
+/* 6. Keyframes & reduced motion */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    border-top-color: var(--spinner-track);
+  }
+}

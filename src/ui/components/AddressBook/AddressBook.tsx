@@ -6,13 +6,13 @@ import Address from "../Address/Address";
 import Button from "../Button/Button";
 import Card from "../Card/Card";
 import $ from "./AddressBook.module.css";
-import { selectAddress,selectAddressError } from "../../../core/reducers/addressBookSlice";
+import { selectAddress, selectAddressError } from "../../../core/reducers/addressBookSlice";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 const AddressBook = () => {
   const addresses = useAppSelector(selectAddress);
 
-  
+
   const { removeAddress, loadSavedAddresses, loading } = useAddressBook();
   const addressBookTitle = `📓 Address book (${addresses.length})`;
 
@@ -40,6 +40,7 @@ const AddressBook = () => {
                   <div className={$.remove}>
                     <Button
                       variant="secondary"
+                      type="reset"
                       onClick={() => removeAddress(address.id)}
                     >
                       Remove

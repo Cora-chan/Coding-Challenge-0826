@@ -10,7 +10,7 @@ import useFormFields from "@/hooks/useFormFields";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import { Address as AddressType } from "./types";
 import { useAppDispatch, useAppSelector } from "./core/store/hooks";
-import { selectAddress,selectAddressError,clearError } from "./core/reducers/addressBookSlice";
+import { selectAddressError, clearError } from "./core/reducers/addressBookSlice";
 
 
 const transformAddress = (address: AddressType): AddressType => {
@@ -54,7 +54,7 @@ const App: React.FC = () => {
   /**
    * Redux actions
    */
-    const { addAddress } = useAddressBook();
+  const { addAddress } = useAddressBook();
   /**
    * Text fields onChange handlers
    */
@@ -79,21 +79,18 @@ const App: React.FC = () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL}/api/getAddresses?postcode=${addressFields.postCode}&streetnumber=${addressFields.houseNumber}`
       );
-      console.log("addressFields", addressFields);
       const data = await response.json();
 
       if (!response.ok) {
-         // our API returns { status: "error", errormessage: "…"}
-      const apiMsg =
-        typeof data.errormessage === "string"
-          ? data.errormessage
-          : "Failed to fetch addresses";
-      setError(apiMsg);
-      return;
+        // our API returns { status: "error", errormessage: "…"}
+        const apiMsg =
+          typeof data.errormessage === "string"
+            ? data.errormessage
+            : "Failed to fetch addresses";
+        setError(apiMsg);
+        return;
       }
 
-      
-      console.log("data", data);
       const transformed = data.details.map(transformAddress);
       setAddresses(transformed);
     } catch (err: any) {
@@ -130,8 +127,6 @@ const App: React.FC = () => {
     }
 
     addAddress({ ...found, ...personFields });
-    // resetPersonFields();
-    // setSelectedAddress("");
   };
 
   const handleClearAll = () => {
@@ -141,7 +136,7 @@ const App: React.FC = () => {
     setAddresses([]);
     setError(undefined);
     dispatch(clearError());
-  
+
   };
 
   return (
@@ -153,85 +148,85 @@ const App: React.FC = () => {
             <br />
             <small className="font-small">
               Enter an address by postcode add personal info and done! 👏
-          </small>
-        </h1>
-        {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
+            </small>
+          </h1>
+          {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
 
-        <Form
-          label="🏠 Find an address"
-          loading={loading}
-          onFormSubmit={handleAddressSubmit}
-          submitText="Find"
-          formEntries={[
-            {
-              name: "postCode",
-              placeholder: "Post Code",
-              extraProps: {
-                value: addressFields.postCode,
-                onChange: handleAddressChange,
-                type:"number"
-              },
-            },
-            {
-              name: "houseNumber",
-              placeholder: "House Number",
-              extraProps: {
-                value: addressFields.houseNumber,
-                onChange: handleAddressChange,
-                type:"number"
-              },
-            },
-          ]}
-        />
-
-
-        {addresses.length > 0 &&
-          addresses.map((address) => {
-            return (
-              <Radio
-                name="selectedAddress"
-                id={address.id}
-                key={address.id}
-                checked={selectedAddress === address.id}
-                onChange={(e) => setSelectedAddress(e.target.value)}
-              >
-                <Address {...address} />
-              </Radio>
-            );
-          })}
-        {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
-        {selectedAddress && (
           <Form
-            label="✏️ Add personal info to address"
-            loading={false}
-            onFormSubmit={handlePersonSubmit}
-            submitText="Add to addressbook"
+            label="🏠 Find an address"
+            loading={loading}
+            onFormSubmit={handleAddressSubmit}
+            submitText="Find"
             formEntries={[
               {
-                name: "firstName",
-                placeholder: "First name",
+                name: "postCode",
+                placeholder: "Post Code",
                 extraProps: {
-                  value: personFields.firstName,
-                  onChange: handlePersonChange,
+                  value: addressFields.postCode,
+                  onChange: handleAddressChange,
+                  type: "number"
                 },
               },
               {
-                name: "lastName",
-                placeholder: "Last name",
+                name: "houseNumber",
+                placeholder: "House Number",
                 extraProps: {
-                  value: personFields.lastName,
-                  onChange: handlePersonChange,
+                  value: addressFields.houseNumber,
+                  onChange: handleAddressChange,
+                  type: "number"
                 },
               },
             ]}
           />
-        )}
 
 
-        {/* TODO: Create an <ErrorMessage /> component for displaying an error message */}
-        {error && <ErrorMessage message={error} />}
+          {addresses.length > 0 &&
+            addresses.map((address) => {
+              return (
+                <Radio
+                  name="selectedAddress"
+                  id={address.id}
+                  key={address.id}
+                  checked={selectedAddress === address.id}
+                  onChange={(e) => setSelectedAddress(e.target.value)}
+                >
+                  <Address {...address} />
+                </Radio>
+              );
+            })}
+          {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
+          {selectedAddress && (
+            <Form
+              label="✏️ Add personal info to address"
+              loading={false}
+              onFormSubmit={handlePersonSubmit}
+              submitText="Add to addressbook"
+              formEntries={[
+                {
+                  name: "firstName",
+                  placeholder: "First name",
+                  extraProps: {
+                    value: personFields.firstName,
+                    onChange: handlePersonChange,
+                  },
+                },
+                {
+                  name: "lastName",
+                  placeholder: "Last name",
+                  extraProps: {
+                    value: personFields.lastName,
+                    onChange: handlePersonChange,
+                  },
+                },
+              ]}
+            />
+          )}
 
-        {/* TODO: Add a button to clear all form fields. 
+
+          {/* TODO: Create an <ErrorMessage /> component for displaying an error message */}
+          {error && <ErrorMessage message={error} />}
+
+          {/* TODO: Add a button to clear all form fields. 
         Button must look different from the default primary button, see design. 
         Button text name must be "Clear all fields"
         On Click, it must clear all form fields, remove all search results and clear all prior
@@ -239,18 +234,18 @@ const App: React.FC = () => {
 
 
 
-        */<Button variant="tertiary" onClick={handleClearAll}>
-            Clear all fields
-          </Button>}
-      </div>
+        */<Button variant="tertiary" type='reset' onClick={handleClearAll}>
+              Clear all fields
+            </Button>}
+        </div>
       </Section>
 
       <Section variant="dark">
-         {/* display error here under the address book */}
-          {duplicateError && <ErrorMessage message={duplicateError} />}
+        {/* display error here under the address book */}
+        {duplicateError && <ErrorMessage message={duplicateError} />}
         <div className="contentWrapper">
-           <AddressBook
-        />
+          <AddressBook
+          />
         </div>
       </Section>
     </main>

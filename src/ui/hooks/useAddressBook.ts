@@ -34,13 +34,19 @@ export default function useAddressBook() {
   }, [addresses, loading]);
 
   // 3) Actions
-  const addAddress   = React.useCallback((address: Address) => {
-    dispatch(addAddressAction(address));
-  }, [dispatch]);
+  const addAddress = React.useCallback(
+    (address: Address) => {
+      dispatch(addAddressAction(address));
+    },
+    [dispatch]
+  );
 
-  const removeAddress = React.useCallback((id: string) => {
-    dispatch(removeAddressAction(id));
-  }, [dispatch]);
+  const removeAddress = React.useCallback(
+    (id: string) => {
+      dispatch(removeAddressAction(id));
+    },
+    [dispatch]
+  );
 
   return {
     addresses,

@@ -17,6 +17,7 @@
   --color-text:    #141925;
   --color-text-light: #72787d;
   --color-alert:   #D0342c;
+  --color-white:   #fffff1;
 
   /* Radii */
   --radius-default: 4px;
@@ -26,6 +27,43 @@
   --width-input:   100%;
   --width-content: 100%;
   --width-section: 100%;
+
+  /* Button radii & sizing */
+  --radius-default:        var(--border-radius-default, 4px);
+  --button-max-width:      var(--width-input, 20rem);
+  --button-font-size:      0.9em;
+  --button-font-weight:    bold;
+  --button-padding:        0.5em 1em;
+  --button-margin-vertical: 0.5em;
+
+  /* Default button colors */
+  --btn-bg:                var(--color-background, #fff);
+  --btn-fg:                var(--color-text, #141925);
+  --btn-border:            none;
+  --btn-shadow:            0 2px 5px rgba(0, 0, 0, 0.1);
+
+  /* Primary variant */
+  --btn-primary-bg:        var(--color-brand, #413ef7);
+  --btn-primary-fg:        var(--color-white, #fff);
+  --btn-primary-border:    none;
+  --btn-primary-shadow:    var(--btn-shadow);
+
+  /* Secondary variant */
+  --btn-secondary-bg:      transparent;
+  --btn-secondary-fg:      var(--color-white, #fff);
+  --btn-secondary-border:  2px solid var(--color-white, #fff);
+  --btn-secondary-shadow:  none;
+
+  /* Tertiary variant */
+  --btn-tertiary-bg:       var(--color-white, #fff);
+  --btn-tertiary-fg:       var(--color-brand, #413ef7);
+  --btn-tertiary-border:   2px solid var(--color-brand, #413ef7);
+  --btn-tertiary-shadow:   none;
+
+  /* Spinner defaults */
+  --spinner-size:          1.5rem;                  
+  --spinner-thickness:     0.1875rem;               
+  --spinner-track:         var(--color-text-light); 
 }
 
 /* 2. Breakpoints */

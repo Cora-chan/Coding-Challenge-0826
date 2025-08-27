@@ -3,13 +3,13 @@ import React from "react";
 import $ from "./ErrorMessage.module.css";
 
 interface ErrorMessageProps {
-  message: string;
+    message: string;
 }
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => (
-  <div className={$.error}>
-    <span>🚫</span>{message}
-  </div>
+    <div className={$.error}>
+        <span>🚫</span>{message}
+    </div>
 );
 
 export default ErrorMessage;

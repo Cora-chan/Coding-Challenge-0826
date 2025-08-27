@@ -35,7 +35,7 @@ const Form: FunctionComponent<FormProps> = ({
   return (
     <form onSubmit={onFormSubmit} className={$.form}>
       <fieldset>
-        <h3 className={$.formHeading}>{label}</h3>
+        <legend className={$.formHeading}>{label}</legend>
 
         {formEntries.map(({ name, placeholder, extraProps }, idx) => {
           const { value } = extraProps;
@@ -45,7 +45,7 @@ const Form: FunctionComponent<FormProps> = ({
           if (typeOfValue !== "string" && typeOfValue !== "number") {
             alert(
               `Form field "${name}" has invalid value type: ` +
-                `${typeOfValue}. Only string or number allowed.`
+              `${typeOfValue}. Only string or number allowed.`
             );
           }
 

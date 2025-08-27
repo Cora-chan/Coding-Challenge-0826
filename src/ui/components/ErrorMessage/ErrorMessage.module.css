@@ -1,16 +1,16 @@
-.error{
+.error {
     border-radius: var(--border-radius-default);
-  background-color: var(--color-alert);
-  font-family: var(--font-primary);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  color: white;
-  font-size: 0.9em;
-  font-weight: bold;
-  max-width: var(--width-input);
-  padding: 0.5em 1em;
-  margin: 0.5em 0;
-  transition: transform 0.1s ease;
-  width: 100%;
-  display: flex;
-  align-items: center;
+    background-color: var(--color-alert);
+    font-family: var(--font-primary);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-size: 0.9em;
+    font-weight: bold;
+    max-width: var(--width-input);
+    padding: 0.5em 1em;
+    margin: 0.5em 0;
+    transition: transform 0.1s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
 }

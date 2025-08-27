@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-export default function useFormFields<T extends Record<string, string>>(initialValues: T) {
+export default function useFormFields<T extends Record<string, string>>(
+  initialValues: T
+) {
   const [fields, setFields] = useState<T>(initialValues);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -11,15 +13,20 @@ export default function useFormFields<T extends Record<string, string>>(initialV
   const resetFields = () => setFields(initialValues);
 
   const areFieldsFilled = (): boolean => {
-    return Object.values(fields).every((value) => value.trim() !== '');
+    return Object.values(fields).every((value) => value.trim() !== "");
   };
 
   const getMissingFields = (): string[] => {
     return Object.entries(fields)
-      .filter(([_, value]) => value.trim() === '')
+      .filter(([_, value]) => value.trim() === "")
       .map(([key]) => key);
   };
 
-  return { fields, handleChange, resetFields, areFieldsFilled, getMissingFields };
+  return {
+    fields,
+    handleChange,
+    resetFields,
+    areFieldsFilled,
+    getMissingFields,
+  };
 }
-

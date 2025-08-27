@@ -29,7 +29,13 @@ export const addressBookSlice = createSlice({
       /** TODO: Prevent duplicate addresses */
 
       const newAddr = action.payload;
-      const exists = state.addresses.some((a) => a.id === newAddr.id);
+      const normalized = (s: string) => s.trim().toLowerCase();
+
+      const exists = state.addresses.some(
+        (a) =>
+          normalized(a.firstName) === normalized(newAddr.firstName) &&
+          normalized(a.lastName) === normalized(newAddr.lastName)
+      );
 
       if (exists) {
         // Prevent duplicate and notify user
@@ -42,7 +48,6 @@ export const addressBookSlice = createSlice({
     },
     removeAddress: (state, action: PayloadAction<string>) => {
       /** TODO: Write a state update which removes an address from the addresses array. */
-      console.log("remove address1111", action.payload);
       state.addresses = state.addresses.filter((a) => a.id !== action.payload);
       state.error = null; // Clear any previous error
     },
@@ -53,8 +58,13 @@ export const addressBookSlice = createSlice({
   },
 });
 
-export const { addAddress, removeAddress, updateAddresses, setError, clearError } =
-  addressBookSlice.actions;
+export const {
+  addAddress,
+  removeAddress,
+  updateAddresses,
+  setError,
+  clearError,
+} = addressBookSlice.actions;
 
 // // Other code such as selectors can use the imported `RootState` type
 export const selectAddress = (state: RootState) => state.addressBook.addresses;
