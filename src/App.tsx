@@ -11,14 +11,8 @@ import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import { Address as AddressType } from "./types";
 import { useAppDispatch, useAppSelector } from "./core/store/hooks";
 import { selectAddressError, clearError } from "./core/reducers/addressBookSlice";
+import transformAddress, { RawAddressModel } from "./core/models/address";
 
-
-const transformAddress = (address: AddressType): AddressType => {
-  return {
-    ...address,
-    id: `${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
-  };
-};
 
 const App: React.FC = () => {
 
